@@ -63,8 +63,8 @@ void loop()
     float humidity = ((((data[3] * 256.0) + data[4]) * 125) / 65535.0) - 6;
     
     // Output data to dashboard
-    Particle.publish("Temperature in Celsius:  ",  String(cTemp));
-    Particle.publish("Temperature in Fahrenheit:  ", String(fTemp));
-    Particle.publish("Relative Humidity    :  ",  String(humidity));
+    Particle.publish("Temperature in Celsius: ",  String(cTemp));
+    Particle.publish("Temperature in Fahrenheit: ", String(fTemp));
+    Particle.publish("Relative Humidity: ",  String(humidity));
 }
 
