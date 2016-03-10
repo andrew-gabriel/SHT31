@@ -18,31 +18,31 @@ void setup()
     Particle.variable("cTemp", cTemp);
     Particle.variable("humidity", humidity);
     
-    // Initialize I2C communication as MASTER 
+    // Initialise I2C communication as MASTER 
     Wire.begin();
-    // Initialize serial communication, set baud rate = 9600
+    // Initialise serial communication, set baud rate = 9600
     Serial.begin(9600);
   
-    // Begin transmission with given device on I2C bus
+    // Start I2C Transmission
     Wire.beginTransmission(Addr);
     // Send 16-bit command byte          
     Wire.write(0x2C);
     Wire.write(0x06);
-    // Stop I2C transmission on the device
+    // Stop I2C transmission
     Wire.endTransmission();
     delay(300);
 }
 
 void loop() 
 {   
-    int data[6];
-    // Start I2C Transmission on the device
+    unsigned int data[6];
+    // Start I2C Transmission
     Wire.beginTransmission(Addr);
-    // Stop I2C Transmission on the device
+    // Stop I2C Transmission
     Wire.endTransmission();
     
     // Request 6 bytes of data from the device
-    Wire.requestFrom(Addr, 6);
+    Wire.requestFrom(Addr,6);
     
     // Read 6 bytes of data
     // temp msb, temp lsb, crc, hum msb, hum lsb, crc
@@ -58,13 +58,13 @@ void loop()
     delay(300);
   
     // Convert the data
-    cTemp = (((data[0] & 0xFF) * 256 + (data[1] & 0xFF)) * 175.72) / 65536 - 46.85;
-    fTemp = (cTemp * 1.8) + 32;
-    humidity = (125 * ((data[3] & 0xFF) * 256 + (data[4] & 0xFF))) / 65535.0 - 6;
+    float cTemp = ((((data[0] * 256.0) + data[1]) * 175.72) / 65536.0) - 46.85;
+    float fTemp = (cTemp * 1.8) + 32;
+    float humidity = ((((data[3] * 256.0) + data[4]) * 125) / 65535.0) - 6;
     
     // Output data to dashboard
-    Particle.publish("Temperature in Celsius:  ", String(cTemp));
-    Particle.publish("Temperature in Farhenheit:  ", String(fTemp));
-    Particle.publish("Relative Humidity    :  ", String(humidity));
+    Particle.publish("Temperature in Celsius:  ",  String(cTemp));
+    Particle.publish("Temperature in Fahrenheit:  ", String(fTemp));
+    Particle.publish("Relative Humidity    :  ",  String(humidity));
 }
 

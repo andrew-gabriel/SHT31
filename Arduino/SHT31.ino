@@ -4,41 +4,41 @@
 // This code is designed to work with the SHT31_I2CS I2C Mini Module available from ControlEverything.com.
 // https://www.controleverything.com/content/Humidity?sku=SHT31_I2CS#tabs-0-product_tabset-2
 
-#include <wire.h>
+#include <Wire.h>
 
 // SHT31 I2C address is 0x44(68)
 #define Addr 0x44
 
-void setup() 
+void setup()
 {
-  // Initialise I2C communication as MASTER 
+  // Initialise I2C communication as MASTER
   Wire.begin();
   // Initialise serial communication, set baud rate = 9600
   Serial.begin(9600);
   
-  // Begin transmission with given device on I2C bus
+  // Start I2C Transmission
   Wire.beginTransmission(Addr);
-  // Send 16-bit command byte          
+  // Send 16-bit command byte
   Wire.write(0x2C);
   Wire.write(0x06);
-  // Stop I2C transmission on the device
+  // Stop I2C transmission
   Wire.endTransmission();
   delay(300);
 }
 
-void loop() 
+void loop()
 {   
-  int data[6];
-  // Start I2C Transmission on the device
+  unsigned int data[6];
+  // Start I2C Transmission
   Wire.beginTransmission(Addr);
-  // Stop I2C Transmission on the device
+  // Stop I2C Transmission
   Wire.endTransmission();
   
-  // Request 6 bytes of data from the device
+  // Request 6 bytes of data
   Wire.requestFrom(Addr, 6);
 
   // Read 6 bytes of data
-  // temp msb, temp lsb, crc, hum msb, hum lsb, crc
+  // temp msb, temp lsb, temp crc, hum msb, hum lsb, hum crc
   if(Wire.available() == 6)
   {
     data[0] = Wire.read();
@@ -51,17 +51,19 @@ void loop()
   delay(300);
   
   // Convert the data
-  float cTemp = (((data[0] & 0xFF) * 256 + (data[1] & 0xFF)) * 175.72) / 65536 - 46.85;
-  float fTemp = (cTemp * 1.8) + 32;
-  float humidity = (125 * ((data[3] & 0xFF) * 256 + (data[4] & 0xFF))) / 65535.0 - 6;
-    
-        
+  float cTemp = ((((data[0] * 256.0) + data[1]) * 175.72) / 65536.0) - 46.85;
+  float fTemp = (cTemp * 1.8) + 32
+  float humidity = ((((data[3] * 256.0) + data[4]) * 125) / 65535.0) - 6;
+  
   // Output data to serial monitor
-  Serial.print("Temperature in celcius  : ");
-  Serial.println(cTemp);
-  Serial.print("Temperature in Fahrenheit  : ");
-  Serial.println(fTemp);
-  Serial.print("Relative Humidity    :  ");
-  Serial.println(humidity);
+  Serial.print("Temperature in Celsius : ");
+  Serial.print(cTemp);
+  Serial.println(" C");
+  Serial.print("Temperature in Fahrenheit : ");
+  Serial.print(fTemp);
+  Serial.println(" F");
+  Serial.print("Relative Humidity : ");
+  Serial.print(humidity);
+  Serial.println(" %RH");
 }
 
