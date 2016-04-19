@@ -17,7 +17,7 @@ bus.write_i2c_block_data(0x44, 0x2C, [0x06])
 
 time.sleep(0.5)
 
-# SHT30 address, 0x44(68)
+# SHT31 address, 0x44(68)
 # Read data back from 0x00(00), 6 bytes
 # Temp MSB, Temp LSB, Temp CRC, Humididty MSB, Humidity LSB, Humidity CRC
 data = bus.read_i2c_block_data(0x44, 0x00, 6)
