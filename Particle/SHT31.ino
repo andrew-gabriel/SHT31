@@ -10,7 +10,7 @@
 // SHT31 I2C address is 0x44(68)
 #define Addr 0x44
 
-float cTemp = 0.0, fTemp = 0.0, humidity = 0.0;
+double cTemp = 0.0, fTemp = 0.0, humidity = 0.0;
 void setup() 
 {
     // Set variable
@@ -55,16 +55,18 @@ void loop()
         data[4] = Wire.read();
         data[5] = Wire.read();
     }
-    delay(300);
   
     // Convert the data
-    float cTemp = ((((data[0] * 256.0) + data[1]) * 175.72) / 65536.0) - 46.85;
-    float fTemp = (cTemp * 1.8) + 32;
-    float humidity = ((((data[3] * 256.0) + data[4]) * 125) / 65535.0) - 6;
+    cTemp = ((((data[0] * 256.0) + data[1]) * 175.72) / 65536.0) - 46.85;
+    fTemp = (cTemp * 1.8) + 32;
+    humidity = ((((data[3] * 256.0) + data[4]) * 125) / 65535.0) - 6;
     
     // Output data to dashboard
     Particle.publish("Temperature in Celsius: ",  String(cTemp));
+    delay(1000);
     Particle.publish("Temperature in Fahrenheit: ", String(fTemp));
+    delay(1000);
     Particle.publish("Relative Humidity: ",  String(humidity));
+    delay(1000);
 }
 
