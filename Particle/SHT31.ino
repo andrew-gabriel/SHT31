@@ -57,9 +57,9 @@ void loop()
     }
   
     // Convert the data
-    cTemp = ((((data[0] * 256.0) + data[1]) * 175.72) / 65536.0) - 46.85;
+    cTemp = ((((data[0] * 256.0) + data[1]) * 175) / 65536.0) - 45;
     fTemp = (cTemp * 1.8) + 32;
-    humidity = ((((data[3] * 256.0) + data[4]) * 125) / 65535.0) - 6;
+    humidity = ((((data[3] * 256.0) + data[4]) * 100) / 65535.0);
     
     // Output data to dashboard
     Particle.publish("Temperature in Celsius: ",  String(cTemp));
