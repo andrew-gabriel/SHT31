@@ -52,7 +52,7 @@ void loop()
   
   // Convert the data
   float cTemp = ((((data[0] * 256.0) + data[1]) * 175.72) / 65536.0) - 46.85;
-  float fTemp = (cTemp * 1.8) + 32
+  float fTemp = (cTemp * 1.8) + 32;
   float humidity = ((((data[3] * 256.0) + data[4]) * 125) / 65535.0) - 6;
   
   // Output data to serial monitor
