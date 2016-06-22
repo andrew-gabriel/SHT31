@@ -36,7 +36,7 @@ public class SHT31
 
 		//Output data to screen
 		System.out.printf("Temprature in Celsius : %.2f C %n", cTemp);
-		System.out.printf("Temprature in Feharenheit : %.2f F %n", fTemp);
+		System.out.printf("Temprature in Fahrenheit : %.2f F %n", fTemp);
 		System.out.printf("Relative humidity is : %.2f %%RH %n", humidity);
 	}
 }
