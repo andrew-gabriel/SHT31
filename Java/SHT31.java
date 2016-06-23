@@ -20,18 +20,20 @@ public class SHT31
 
 		// Send high repeatability measurement command
 		// Command msb, command lsb
-		byte[] data = new byte[2];
-		data = [0x2C, 0x06];
-		device.write(data, 0, 2);
+		byte[] config = new byte[2];
+		config[0] = (byte)0x2C; 
+		config[1] = (byte)0x06;
+		device.write(config, 0, 2);
 		Thread.sleep(500);
 
 		// Read 6 bytes of data
 		// temp msb, temp lsb, temp CRC, humidity msb, humidity lsb, humidity CRC
+		byte[] data = new byte[6];
 		device.read(data, 0, 6);
 
 		//Convert the data
 		double cTemp = ((((data[0] & 0xFF) * 256) + (data[1] & 0xFF)) * 175.0) / 65535.0  - 45.0;
-		double fTemp = ((315 * cTemp) / 65535) - 49;
+		double fTemp = ((((data[0] & 0xFF) * 256) + (data[1] & 0xFF)) * 315.0) / 65535.0 - 49.0;
 		double humidity = ((((data[3] & 0xFF) * 256) + (data[4] & 0xFF)) * 100.0) / 65535.0;
 
 		//Output data to screen
