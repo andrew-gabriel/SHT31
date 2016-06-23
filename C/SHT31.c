@@ -42,12 +42,12 @@ void main()
 	{
 	// Convert the data
 	double cTemp = (((data[0] * 256) + data[1]) * 175.0) / 65535.0  - 45.0;
-	double fTemp = ((315 * cTemp) / 65535) - 49;
+	double fTemp = (((data[0] * 256) + data[1]) * 315.0) / 65535.0 - 49.0;
 	double humidity = (((data[3] * 256) + data[4])) * 100.0 / 65535.0;
 
 	// Output data to screen
-	printf("Temprature in Celsius : %.2f C \n", cTemp);
-	printf("Temprature in Feharenheit : %.2f F \n", fTemp);
-	printf("Relative humidity is : %.2f RH \n", humidity);
+	printf("Temperature in Celsius : %.2f C \n", cTemp);
+	printf("Temperature in Fahrenheit : %.2f F \n", fTemp);
+	printf("Relative Humidity is : %.2f RH \n", humidity);
 	}
 }
