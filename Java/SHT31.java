@@ -32,7 +32,7 @@ public class SHT31
 		//Convert the data
 		double cTemp = ((((data[0] & 0xFF) * 256) + (data[1] & 0xFF)) * 175.0) / 65535.0  - 45.0;
 		double fTemp = ((315 * cTemp) / 65535) - 49;
-		double humidity = (((data[3] & 0xFF) * 256) + (data[4] & 0xFF)) * 100.0) / 65535.0;
+		double humidity = ((((data[3] & 0xFF) * 256) + (data[4] & 0xFF)) * 100.0) / 65535.0;
 
 		//Output data to screen
 		System.out.printf("Temperature in Celsius : %.2f C %n", cTemp);
