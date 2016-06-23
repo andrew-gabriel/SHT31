@@ -35,8 +35,8 @@ public class SHT31
 		double humidity = (((data[3] & 0xFF) * 256) + (data[4] & 0xFF)) * 100.0) / 65535.0;
 
 		//Output data to screen
-		System.out.printf("Temprature in Celsius : %.2f C %n", cTemp);
-		System.out.printf("Temprature in Fahrenheit : %.2f F %n", fTemp);
-		System.out.printf("Relative humidity is : %.2f %%RH %n", humidity);
+		System.out.printf("Temperature in Celsius : %.2f C %n", cTemp);
+		System.out.printf("Temperature in Fahrenheit : %.2f F %n", fTemp);
+		System.out.printf("Relative Humidity is : %.2f %%RH %n", humidity);
 	}
 }
