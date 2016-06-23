@@ -15,7 +15,13 @@ void setup()
   Wire.begin();
   // Initialise serial communication, set baud rate = 9600
   Serial.begin(9600);
-  
+  delay(300);
+}
+
+void loop()
+{
+  unsigned int data[6];
+
   // Start I2C Transmission
   Wire.beginTransmission(Addr);
   // Send 16-bit command byte
@@ -24,22 +30,18 @@ void setup()
   // Stop I2C transmission
   Wire.endTransmission();
   delay(300);
-}
 
-void loop()
-{   
-  unsigned int data[6];
   // Start I2C Transmission
   Wire.beginTransmission(Addr);
   // Stop I2C Transmission
   Wire.endTransmission();
-  
+
   // Request 6 bytes of data
   Wire.requestFrom(Addr, 6);
 
   // Read 6 bytes of data
   // temp msb, temp lsb, temp crc, hum msb, hum lsb, hum crc
-  if(Wire.available() == 6)
+  if (Wire.available() == 6)
   {
     data[0] = Wire.read();
     data[1] = Wire.read();
@@ -48,21 +50,21 @@ void loop()
     data[4] = Wire.read();
     data[5] = Wire.read();
   }
-  delay(300);
-  
   // Convert the data
-  float cTemp = ((((data[0] * 256.0) + data[1]) * 175.72) / 65536.0) - 46.85;
-  float fTemp = (cTemp * 1.8) + 32;
-  float humidity = ((((data[3] * 256.0) + data[4]) * 125) / 65535.0) - 6;
-  
+  int temp = (data[0] * 256) + data[1];
+  float cTemp = -45.0 + (175.0 * temp / 65535.0);
+  float fTemp = (cTemp * 1.8) + 32.0;
+  float humidity = (100.0 * ((data[3] * 256.0) + data[4])) / 65535.0;
+
   // Output data to serial monitor
-  Serial.print("Temperature in Celsius : ");
+  Serial.print("Temperature in Celsius :");
   Serial.print(cTemp);
   Serial.println(" C");
-  Serial.print("Temperature in Fahrenheit : ");
+  Serial.print("Temperature in Fahrenheit :");
   Serial.print(fTemp);
   Serial.println(" F");
-  Serial.print("Relative Humidity : ");
+  Serial.print("Relative Humidity :");
   Serial.print(humidity);
   Serial.println(" %RH");
+  delay(500);
 }
