@@ -21,7 +21,7 @@ public class SHT31
 		// Send high repeatability measurement command
 		// Command msb, command lsb
 		byte[] data = new byte[2];
-		data = {0x2C, 0x06};
+		data = [0x2C, 0x06];
 		device.write(data, 0, 2);
 		Thread.sleep(500);
 
