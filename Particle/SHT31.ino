@@ -37,6 +37,7 @@ void loop()
   Wire.write(0x06);
   // Stop I2C transmission
   Wire.endTransmission();
+  delay(300);
 
   // Start I2C Transmission
   Wire.beginTransmission(Addr);
