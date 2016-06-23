@@ -11,7 +11,7 @@
 #define Addr 0x44
 
 int temp = 0;
-float cTemp = 0.0, fTemp = 0.0, humidity = 0.0;
+double cTemp = 0.0, fTemp = 0.0, humidity = 0.0;
 void setup()
 {
   // Set variable
