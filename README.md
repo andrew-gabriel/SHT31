@@ -69,7 +69,7 @@ Download (or git pull) the code in Beaglebone Black.
 
 Compile the c program.
 ```cpp
-$>gcc SHT31.c -o SHT31
+$>gcc -lm SHT31.c -o SHT31
 ```
 Run the c program.
 ```cpp
